@@ -17,6 +17,9 @@ import (
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 	"runtime/debug"
+	"github.com/DataDog/gostackparse"
+	"bytes"
+	"encoding/json"
 )
 
 // UnaryServerInterceptor Create new unary server interceptor.
@@ -39,7 +42,9 @@ func UnaryServerInterceptor(opts ...rkmidpanic.Option) grpc.UnaryServerIntercept
 				err = sts.Err()
 
 				rkgrpcctx.GetEvent(ctx).SetCounter("panic", 1)
-				rkgrpcctx.GetLogger(ctx).Error(fmt.Sprintf("panic occurs:\n%s", string(debug.Stack())), zap.Error(err))
+				stack, _ := gostackparse.Parse(bytes.NewReader(debug.Stack()))
+				stackJson, _ := json.MarshalIndent(stack, "", "  ")
+				rkgrpcctx.GetLogger(ctx).Error(fmt.Sprintf("panic occurs:\n%s", string(stackJson)), zap.Error(err))
 			}
 		}()
 

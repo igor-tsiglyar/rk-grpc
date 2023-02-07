@@ -3,6 +3,7 @@ module github.com/rookie-ninja/rk-grpc/v2
 go 1.18
 
 require (
+	github.com/DataDog/gostackparse v0.6.0
 	github.com/golang-jwt/jwt/v4 v4.4.2
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.12.0
 	github.com/improbable-eng/grpc-web v0.15.0
