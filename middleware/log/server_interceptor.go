@@ -39,6 +39,7 @@ func UnaryServerInterceptor(opts ...rkmidlog.Option) grpc.UnaryServerInterceptor
 			zap.String("grpcService", grpcService),
 			zap.String("grpcMethod", grpcMethod),
 			zap.String("grpcType", "UnaryServer"),
+			zap.Any("grpcRequest", req),
 			zap.String("gwMethod", gwMethod),
 			zap.String("gwPath", gwPath),
 			zap.String("gwScheme", gwScheme),
